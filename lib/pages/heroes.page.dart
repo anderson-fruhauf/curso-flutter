@@ -94,13 +94,14 @@ class _MyHomePageState extends State<MyHeroPage> {
                       minWidth: 14,
                       minHeight: 14,
                     ),
-                    child: Text(
-                      '1',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
+                    child: Consumer<HeroesController>(
+                      builder: (context, heroController, widget) {
+                        return Text(
+                          "${heroController.heroes.where((i) => i.isFavorite).length}",
+                          style: TextStyle(color: Colors.white, fontSize: 8),
+                          textAlign: TextAlign.center,
+                        );
+                      },
                     ),
                   ),
                 ),
