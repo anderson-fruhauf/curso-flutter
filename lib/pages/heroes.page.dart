@@ -14,6 +14,7 @@ class HeroApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -60,6 +61,7 @@ class _MyHomePageState extends State<MyHeroPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("Refez a tela");
     return Scaffold(
         appBar: AppBar(
           title: Text('Provider'),
@@ -68,44 +70,45 @@ class _MyHomePageState extends State<MyHeroPage> {
             color: Colors.purple,
           ),
           actions: <Widget>[
-            new Stack(
-              children: <Widget>[
-                Icon(
-                  Icons.ac_unit,
-                ),
-                // Consumer<HeroesController>(
-                //  builder: (context, heroController, widget) {
-                //   return Text(
-                //    "${heroController.heroes.where((i) => i.isFavorite).length}",
-                //    style: TextStyle(color: Colors.red, fontSize: 22),
-                //  );
-                // },
-                // ),
-                new Positioned(
-                  right: 11,
-                  top: 11,
-                  child: new Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: new BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 14,
-                      minHeight: 14,
-                    ),
-                    child: Consumer<HeroesController>(
-                      builder: (context, heroController, widget) {
-                        return Text(
-                          "${heroController.heroes.where((i) => i.isFavorite).length}",
-                          style: TextStyle(color: Colors.white, fontSize: 8),
-                          textAlign: TextAlign.center,
-                        );
-                      },
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Stack(
+                children: [
+                  Icon(
+                    Icons.notifications,
+                    color: Colors.black,
+                  ),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    alignment: Alignment.topRight,
+                    margin: EdgeInsets.only(top: 5),
+                    child: Container(
+                      width: 15,
+                      height: 15,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffc32c37),
+                          border: Border.all(color: Colors.white, width: 1)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Center(
+                          child: Consumer<HeroesController>(
+                            builder: (context, heroController, widget) {
+                              return Text(
+                                "${heroController.heroes.where((i) => i.isFavorite).length}",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 11),
+                                textAlign: TextAlign.center,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
