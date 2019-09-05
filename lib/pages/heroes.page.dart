@@ -45,17 +45,32 @@ class _MyHomePageState extends State<MyHeroPage> {
   }
 
   _buildItem(HeroModel heroModel, HeroesController heroesController) {
-    return ListTile(
+    return GestureDetector(
       onTap: () {
         heroesController.checkFavorito(heroModel);
       },
-      title: Text(heroModel.nome),
-      trailing: heroModel.isFavorite
-          ? Icon(
-              Icons.thumb_up,
-              color: Colors.purple,
-            )
-          : Icon(Icons.thumbs_up_down),
+      child: Card(
+        child: Padding(
+          padding: new EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          child: Stack(
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  heroModel.nome,
+                  style: TextStyle(fontSize: 22),
+                ),
+                subtitle: Text(heroModel.data),
+                trailing: heroModel.isFavorite
+                    ? Icon(
+                        Icons.thumb_up,
+                        color: Colors.purple,
+                      )
+                    : Icon(Icons.thumbs_up_down),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
