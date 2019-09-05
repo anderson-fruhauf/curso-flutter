@@ -35,11 +35,11 @@ class MyHeroPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHeroPage> {
-  _buildList(heroesController) {
+  _buildList(heroesController, heroes) {
     return ListView.builder(
-      itemCount: heroesController.heroes.length,
+      itemCount: heroes.length,
       itemBuilder: (context, index) {
-        return _buildItem(heroesController.heroes[index], heroesController);
+        return _buildItem(heroes[index], heroesController);
       },
     );
   }
@@ -114,7 +114,10 @@ class _MyHomePageState extends State<MyHeroPage> {
         ),
         body: Consumer<HeroesController>(
           builder: (context, heroesController, whidget) {
-            return _buildList(heroesController);
+            List<HeroModel> heroes = [];
+            heroes.addAll(heroesController.heroes.where((i) => i.isFavorite));
+            heroes.addAll(heroesController.heroes.where((i) => !i.isFavorite));
+            return _buildList(heroesController, heroes);
           },
         )
         // is trailing comma makes auto-formatting nicer for build methods.
