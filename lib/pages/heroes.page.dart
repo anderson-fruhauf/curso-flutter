@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHeroPage> {
       },
       child: Card(
         child: Padding(
-          padding: new EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          padding: new EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           child: Stack(
             children: <Widget>[
               ListTile(
@@ -60,11 +60,34 @@ class _MyHomePageState extends State<MyHeroPage> {
                   style: TextStyle(fontSize: 22),
                 ),
                 subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                  Text(heroModel.data),
-                  Text('data'),
-                ]),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Text(heroModel.cliente),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Text(heroModel.tecnico),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Text(heroModel.data),
+                      ),
+                      FlatButton(
+                        child: Text(
+                          'Excluir',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 21,
+                          ),
+                        ),
+                        color: Colors.blue[100],
+                        onPressed: () {
+                          heroesController.remove(heroModel);
+                        },
+                      ),
+                    ]),
                 trailing: heroModel.isFavorite
                     ? Icon(
                         Icons.thumb_up,
@@ -83,64 +106,81 @@ class _MyHomePageState extends State<MyHeroPage> {
   Widget build(BuildContext context) {
     print("Refez a tela");
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Provider'),
-          leading: Icon(
-            Icons.gesture,
-            color: Colors.purple,
-          ),
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Stack(
-                children: [
-                  Icon(
-                    Icons.notifications,
-                    color: Colors.black,
-                  ),
-                  Container(
-                    width: 30,
-                    height: 30,
-                    alignment: Alignment.topRight,
-                    margin: EdgeInsets.only(top: 5),
-                    child: Container(
-                      width: 15,
-                      height: 15,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xffc32c37),
-                          border: Border.all(color: Colors.white, width: 1)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Center(
-                          child: Consumer<HeroesController>(
-                            builder: (context, heroController, widget) {
-                              return Text(
-                                "${heroController.heroes.where((i) => i.isFavorite).length}",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 11),
-                                textAlign: TextAlign.center,
-                              );
-                            },
-                          ),
+      appBar: AppBar(
+        title: Text('Provider'),
+        leading: Icon(
+          Icons.gesture,
+          color: Colors.purple,
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Stack(
+              children: [
+                Icon(
+                  Icons.notifications,
+                  color: Colors.black,
+                ),
+                Container(
+                  width: 30,
+                  height: 30,
+                  alignment: Alignment.topRight,
+                  margin: EdgeInsets.only(top: 5),
+                  child: Container(
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffc32c37),
+                        border: Border.all(color: Colors.white, width: 1)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Center(
+                        child: Consumer<HeroesController>(
+                          builder: (context, heroController, widget) {
+                            return Text(
+                              "${heroController.heroes.where((i) => i.isFavorite).length}",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 11),
+                              textAlign: TextAlign.center,
+                            );
+                          },
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-        body: Consumer<HeroesController>(
-          builder: (context, heroesController, whidget) {
-            List<HeroModel> heroes = [];
-            heroes.addAll(heroesController.heroes.where((i) => i.isFavorite));
-            heroes.addAll(heroesController.heroes.where((i) => !i.isFavorite));
-            return _buildList(heroesController, heroes);
-          },
-        )
-        // is trailing comma makes auto-formatting nicer for build methods.
-        );
+          ),
+        ],
+      ),
+      body: Consumer<HeroesController>(
+        builder: (context, heroesController, whidget) {
+          List<HeroModel> heroes = [];
+          heroes.addAll(heroesController.heroes.where((i) => i.isFavorite));
+          heroes.addAll(heroesController.heroes.where((i) => !i.isFavorite));
+          return _buildList(heroesController, heroes);
+        },
+      ),
+      floatingActionButton: Consumer<HeroesController>(
+        builder: (context, heroesController, whidget) {
+          return FloatingActionButton(
+            child: Icon(Icons.plus_one),
+            onPressed: () {
+              HeroModel model = new HeroModel(
+                cliente: 'cliente',
+                data: "12/12/12",
+                isFavorite: true,
+                nome: 'Criado no botao',
+              );
+
+              heroesController.add(model);
+            },
+          );
+        },
+      ),
+      // is trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 }

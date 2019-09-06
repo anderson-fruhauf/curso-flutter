@@ -22,4 +22,14 @@ class HeroesController extends ChangeNotifier {
     model.isFavorite = !model.isFavorite;
     this.notifyListeners();
   }
+
+  add(HeroModel model) {
+    heroes.add(model);
+    this.notifyListeners();
+  }
+
+  remove(HeroModel model) {
+    heroes.remove(model);
+    this.notifyListeners();
+  }
 }
