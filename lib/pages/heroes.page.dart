@@ -59,7 +59,12 @@ class _MyHomePageState extends State<MyHeroPage> {
                   heroModel.nome,
                   style: TextStyle(fontSize: 22),
                 ),
-                subtitle: Text(heroModel.data),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                  Text(heroModel.data),
+                  Text('data'),
+                ]),
                 trailing: heroModel.isFavorite
                     ? Icon(
                         Icons.thumb_up,
