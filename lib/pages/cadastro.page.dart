@@ -15,6 +15,7 @@ class _State extends State<Cadastro> {
 
   String _value = 'teste';
   DateTime data = new DateTime.now();
+  bool favorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +77,23 @@ class _State extends State<Cadastro> {
                   ],
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('Favoritar: '),
+                    Checkbox(
+                      value: favorite,
+                      onChanged: (bool value) {
+                        setState(() {
+                          this.favorite = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
               new Container(
                 padding: new EdgeInsets.all(32.0),
                 child: new Center(
@@ -118,7 +136,7 @@ class _State extends State<Cadastro> {
                     cliente: cliente.text,
                     nome: nome.text,
                     data: data.toString(),
-                    isFavorite: true,
+                    isFavorite: favorite,
                     tecnico: tecnico.text),
               );
               Navigator.pop(context);
