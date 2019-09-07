@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_curso/controller/heroes.controller.dart';
 import 'package:flutter_curso/models/hero.model.dart';
+import 'package:flutter_curso/pages/cadastro.page.dart';
 import 'package:provider/provider.dart';
 
 class HeroApp extends StatelessWidget {
@@ -88,12 +89,17 @@ class _MyHomePageState extends State<MyHeroPage> {
                         },
                       ),
                     ]),
-                trailing: heroModel.isFavorite
-                    ? Icon(
-                        Icons.thumb_up,
-                        color: Colors.purple,
-                      )
-                    : Icon(Icons.thumbs_up_down),
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    heroModel.isFavorite
+                        ? Icon(
+                            Icons.thumb_up,
+                            color: Colors.purple,
+                          )
+                        : Icon(Icons.thumbs_up_down),
+                  ],
+                ),
               ),
             ],
           ),
@@ -168,14 +174,12 @@ class _MyHomePageState extends State<MyHeroPage> {
           return FloatingActionButton(
             child: Icon(Icons.plus_one),
             onPressed: () {
-              HeroModel model = new HeroModel(
-                cliente: 'cliente',
-                data: "12/12/12",
-                isFavorite: true,
-                nome: 'Criado no botao',
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Cadastro(),
+                ),
               );
-
-              heroesController.add(model);
             },
           );
         },
