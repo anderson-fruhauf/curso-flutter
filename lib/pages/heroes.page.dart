@@ -48,7 +48,13 @@ class _MyHomePageState extends State<MyHeroPage> {
   _buildItem(HeroModel heroModel, HeroesController heroesController) {
     return GestureDetector(
       onTap: () {
-        heroesController.checkFavorito(heroModel);
+        //heroesController.checkFavorito(heroModel);
+         Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Cadastro(model: heroModel),
+                ),
+              );
       },
       child: Card(
         child: Padding(
@@ -92,12 +98,17 @@ class _MyHomePageState extends State<MyHeroPage> {
                 trailing: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    heroModel.isFavorite
-                        ? Icon(
-                            Icons.thumb_up,
-                            color: Colors.purple,
-                          )
-                        : Icon(Icons.thumbs_up_down),
+                    IconButton(
+                      onPressed: (){
+                        heroesController.checkFavorito(heroModel);
+                      },
+                      icon: heroModel.isFavorite
+                          ? Icon(
+                              Icons.thumb_up,
+                              color: Colors.purple,
+                            )
+                          : Icon(Icons.thumbs_up_down),
+                    ),
                   ],
                 ),
               ),

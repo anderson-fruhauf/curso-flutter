@@ -4,8 +4,12 @@ import 'package:flutter_curso/models/hero.model.dart';
 import 'package:provider/provider.dart';
 
 class Cadastro extends StatefulWidget {
+  HeroModel model;
+
+  Cadastro({this.model}){}
+
   @override
-  _State createState() => _State();
+  _State createState() => _State(model);
 }
 
 class _State extends State<Cadastro> {
@@ -13,9 +17,23 @@ class _State extends State<Cadastro> {
   TextEditingController cliente = TextEditingController();
   TextEditingController tecnico = TextEditingController();
 
-  String _value = 'teste';
   DateTime data = new DateTime.now();
   bool favorite = false;
+  HeroModel model = null;
+
+  _State(HeroModel model){
+    if(model != null){
+      this.model = model;
+
+      nome.text = model.nome;
+      cliente.text = model.cliente;
+      tecnico.text = model.tecnico;
+      data = DateTime.parse(model.data);
+      favorite = model.isFavorite;
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -131,14 +149,21 @@ class _State extends State<Cadastro> {
           return FloatingActionButton(
             child: Icon(Icons.control_point_duplicate),
             onPressed: () {
-              heroesController.add(
-                new HeroModel(
+              HeroModel hero =  new HeroModel(
                     cliente: cliente.text,
                     nome: nome.text,
                     data: data.toString(),
                     isFavorite: favorite,
-                    tecnico: tecnico.text),
-              );
+                    tecnico: tecnico.text,
+                    );
+
+              if(model != null){
+                int index = heroesController.heroes.indexOf(model);
+                heroesController.heroes[index] = hero;
+                heroesController.notifyListeners();
+              }else{
+                heroesController.add(hero);
+              }                            
               Navigator.pop(context);
             },
           );

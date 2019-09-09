@@ -3,19 +3,11 @@ import 'package:flutter_curso/models/hero.model.dart';
 
 class HeroesController extends ChangeNotifier {
   List<HeroModel> heroes = [
-    HeroModel(nome: 'patati', isFavorite: true),
-    HeroModel(nome: 'patata', tecnico: 'anderson'),
-    HeroModel(nome: 'pikapau'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'super chock'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'tunizio'),
-    HeroModel(nome: 'tunizio'),
+    HeroModel(nome: 'patati', isFavorite: true, data: DateTime.now().toString()),
+    HeroModel(nome: 'patata', tecnico: 'anderson', data: DateTime.now().toString()),
+    HeroModel(nome: 'pikapau', data: DateTime.now().toString()),
+    HeroModel(nome: 'tunizio', data: DateTime.now().toString()),
+    HeroModel(nome: 'super chock', data: DateTime.now().toString()),
   ];
 
   checkFavorito(HeroModel model) {

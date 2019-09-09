@@ -8,7 +8,7 @@ class HeroModel {
   HeroModel({
     this.nome,
     this.isFavorite = false,
-    this.data = '12/09/2222',
+    this.data,
     this.tecnico = "anderson",
     this.cliente = 'default',
   });
