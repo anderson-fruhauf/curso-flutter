@@ -46,73 +46,79 @@ class _MyHomePageState extends State<MyHeroPage> {
   }
 
   _buildItem(HeroModel heroModel, HeroesController heroesController) {
-    return GestureDetector(
-      onTap: () {
-        //heroesController.checkFavorito(heroModel);
-         Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Cadastro(model: heroModel),
-                ),
-              );
+    return Dismissible(
+      key: Key(heroModel.nome),
+      onDismissed: (direction) {
+        heroesController.remove(heroModel);
       },
-      child: Card(
-        child: Padding(
-          padding: new EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-          child: Stack(
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                  heroModel.nome,
-                  style: TextStyle(fontSize: 22),
-                ),
-                subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(3),
-                        child: Text(heroModel.cliente),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(3),
-                        child: Text(heroModel.tecnico),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(3),
-                        child: Text(heroModel.data),
-                      ),
-                      FlatButton(
-                        child: Text(
-                          'Excluir',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 21,
-                          ),
+      child: GestureDetector(
+        onTap: () {
+          //heroesController.checkFavorito(heroModel);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Cadastro(model: heroModel),
+            ),
+          );
+        },
+        child: Card(
+          child: Padding(
+            padding: new EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            child: Stack(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    heroModel.nome,
+                    style: TextStyle(fontSize: 22),
+                  ),
+                  subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.all(3),
+                          child: Text(heroModel.cliente),
                         ),
-                        color: Colors.blue[100],
+                        Padding(
+                          padding: EdgeInsets.all(3),
+                          child: Text(heroModel.tecnico),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(3),
+                          child: Text(heroModel.data),
+                        ),
+                        FlatButton(
+                          child: Text(
+                            'Excluir',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 21,
+                            ),
+                          ),
+                          color: Colors.blue[100],
+                          onPressed: () {
+                            heroesController.remove(heroModel);
+                          },
+                        ),
+                      ]),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      IconButton(
                         onPressed: () {
-                          heroesController.remove(heroModel);
+                          heroesController.checkFavorito(heroModel);
                         },
+                        icon: heroModel.isFavorite
+                            ? Icon(
+                                Icons.thumb_up,
+                                color: Colors.purple,
+                              )
+                            : Icon(Icons.thumbs_up_down),
                       ),
-                    ]),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: (){
-                        heroesController.checkFavorito(heroModel);
-                      },
-                      icon: heroModel.isFavorite
-                          ? Icon(
-                              Icons.thumb_up,
-                              color: Colors.purple,
-                            )
-                          : Icon(Icons.thumbs_up_down),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
