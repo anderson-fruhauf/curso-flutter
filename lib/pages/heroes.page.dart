@@ -36,24 +36,24 @@ class MyHeroPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHeroPage> {
-  _buildList(heroesController, heroes) {
+  _buildList(heroesController, heroes, BuildContext context) {
     return ListView.builder(
       itemCount: heroes.length,
       itemBuilder: (context, index) {
-        return _buildItem(heroes[index], heroesController);
+        return _buildItem(heroes[index], heroesController, context);
       },
     );
   }
 
-  _buildItem(HeroModel heroModel, HeroesController heroesController) {
+  _buildItem(HeroModel heroModel, HeroesController heroesController, BuildContext context) {
     return Dismissible(
       key: Key(heroModel.nome),
       onDismissed: (direction) {
         heroesController.remove(heroModel);
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text('item elimindao com sucesso'),),);
       },
       child: GestureDetector(
         onTap: () {
-          //heroesController.checkFavorito(heroModel);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -183,7 +183,7 @@ class _MyHomePageState extends State<MyHeroPage> {
           List<HeroModel> heroes = [];
           heroes.addAll(heroesController.heroes.where((i) => i.isFavorite));
           heroes.addAll(heroesController.heroes.where((i) => !i.isFavorite));
-          return _buildList(heroesController, heroes);
+          return _buildList(heroesController, heroes, context);
         },
       ),
       floatingActionButton: Consumer<HeroesController>(
